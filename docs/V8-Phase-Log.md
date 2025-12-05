@@ -11,3 +11,10 @@
   - Postgres role 'nite' and database 'nite_os' created.
 - Ready to begin Phase 1 – Backend Skeleton.
 
+
+## 2025-12-05 – Phase 1 – Backend Skeleton
+- Initialized NestJS project in \`/backend\`.
+- Set up \`app.module.ts\` with TypeORM connection to Postgres.
+- Created \`User\` entity.
+- Generated stub modules for all core features.
+- Verified system health via \`curl\` on localhost:3000.
