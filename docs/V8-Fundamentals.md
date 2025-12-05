@@ -1,6 +1,3 @@
-cd /opt/nite-os
-
-cat <<'EOF' > docs/V8-Fundamentals.md
 # NiteOS V8 – Fundamentals
 
 ## 1. What NiteOS V8 Is
@@ -228,4 +225,3 @@ Two docs in this repo are mandatory:
      - Important commands/decisions
 
 If code or infrastructure changes in a way that conflicts with these docs, the change is wrong and must be corrected or documented.
-EOF
