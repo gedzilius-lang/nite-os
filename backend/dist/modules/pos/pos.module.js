@@ -12,15 +12,22 @@ const typeorm_1 = require("@nestjs/typeorm");
 const pos_controller_1 = require("./pos.controller");
 const pos_service_1 = require("./pos.service");
 const pos_transaction_entity_1 = require("./pos-transaction.entity");
+const users_module_1 = require("../users/users.module");
+const market_module_1 = require("../market/market.module");
+const nitecoin_module_1 = require("../nitecoin/nitecoin.module");
 let PosModule = class PosModule {
 };
 exports.PosModule = PosModule;
 exports.PosModule = PosModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([pos_transaction_entity_1.PosTransaction])],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([pos_transaction_entity_1.PosTransaction]),
+            users_module_1.UsersModule,
+            market_module_1.MarketModule,
+            nitecoin_module_1.NitecoinModule,
+        ],
         controllers: [pos_controller_1.PosController],
         providers: [pos_service_1.PosService],
-        exports: [typeorm_1.TypeOrmModule],
     })
 ], PosModule);
 //# sourceMappingURL=pos.module.js.map

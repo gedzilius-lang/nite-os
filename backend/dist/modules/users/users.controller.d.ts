@@ -7,4 +7,5 @@ export declare class UsersController {
         service: string;
         timestamp: string;
     };
+    createDemo(): Promise<import("./user.entity").User>;
 }

@@ -19,6 +19,9 @@ let UsersController = class UsersController {
     healthCheck() {
         return this.service.getHealth();
     }
+    async createDemo() {
+        return this.service.createDemoUser();
+    }
 };
 exports.UsersController = UsersController;
 __decorate([
@@ -27,6 +30,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "healthCheck", null);
+__decorate([
+    (0, common_1.Post)('demo'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "createDemo", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

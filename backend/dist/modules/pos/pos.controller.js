@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PosController = void 0;
 const common_1 = require("@nestjs/common");
@@ -16,17 +19,28 @@ let PosController = class PosController {
     constructor(service) {
         this.service = service;
     }
-    healthCheck() {
-        return this.service.getHealth();
+    async checkout(venueId, dto) {
+        return this.service.checkout(Number(venueId), dto);
+    }
+    health() {
+        return { status: 'ok', service: 'pos' };
     }
 };
 exports.PosController = PosController;
+__decorate([
+    (0, common_1.Post)(':venueId/checkout'),
+    __param(0, (0, common_1.Param)('venueId')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], PosController.prototype, "checkout", null);
 __decorate([
     (0, common_1.Get)('health'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], PosController.prototype, "healthCheck", null);
+], PosController.prototype, "health", null);
 exports.PosController = PosController = __decorate([
     (0, common_1.Controller)('pos'),
     __metadata("design:paramtypes", [pos_service_1.PosService])

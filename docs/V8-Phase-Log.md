@@ -24,3 +24,9 @@
 - Wired all modules to use \`TypeOrmModule.forFeature\`.
 - Registered all entities in \`AppModule\`.
 - Postgres tables successfully created/synced.
+
+## 2025-12-05 – Phase 3 – Market & POS Logic
+- Implemented \`GET /api/market/:venueId/items\`.
+- Implemented \`POST /api/pos/:venueId/checkout\`.
+- Added logic to deduct Nitecoin balance and log transactions.
+- Added dependency injection between POS, Users, Market, and Nitecoin modules.
