@@ -1,6 +1,3 @@
-cd /opt/nite-os
-
-cat <<'EOF' > docs/V8-Phase-Log.md
 # NiteOS V8 – Phase Log
 
 This file tracks the evolution of NiteOS V8 by phase.
@@ -22,4 +19,3 @@ Every completed phase should add a new entry.
 - Actual Phase 0 (Pre-Flight) will be executed and logged in a separate entry.
 
 ---
-EOF
