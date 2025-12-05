@@ -18,3 +18,9 @@
 - Created \`User\` entity.
 - Generated stub modules for all core features.
 - Verified system health via \`curl\` on localhost:3000.
+
+## 2025-12-05 – Phase 2 – Core Entities
+- Implemented full Entity definitions for User, Venue, MarketItem, NitecoinTransaction, PosTransaction.
+- Wired all modules to use \`TypeOrmModule.forFeature\`.
+- Registered all entities in \`AppModule\`.
+- Postgres tables successfully created/synced.

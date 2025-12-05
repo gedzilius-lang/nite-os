@@ -9,56 +9,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.PosTransaction = void 0;
 const typeorm_1 = require("typeorm");
-let User = class User {
+let PosTransaction = class PosTransaction {
 };
-exports.User = User;
+exports.PosTransaction = PosTransaction;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], PosTransaction.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "externalId", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], PosTransaction.prototype, "venueId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true, nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "nitetapId", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "apiKey", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ default: 'USER' }),
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], PosTransaction.prototype, "staffId", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], User.prototype, "venueId", void 0);
+], PosTransaction.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 0 }),
-    __metadata("design:type", Number)
-], User.prototype, "xp", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ default: 1 }),
-    __metadata("design:type", Number)
-], User.prototype, "level", void 0);
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], PosTransaction.prototype, "nitetapId", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'decimal', default: 0 }),
     __metadata("design:type", Number)
-], User.prototype, "niteBalance", void 0);
+], PosTransaction.prototype, "totalChf", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'decimal', default: 0 }),
+    __metadata("design:type", Number)
+], PosTransaction.prototype, "totalNite", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 'COMPLETED' }),
+    __metadata("design:type", String)
+], PosTransaction.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], User.prototype, "updatedAt", void 0);
-exports.User = User = __decorate([
-    (0, typeorm_1.Entity)('users')
-], User);
-//# sourceMappingURL=user.entity.js.map
+], PosTransaction.prototype, "createdAt", void 0);
+exports.PosTransaction = PosTransaction = __decorate([
+    (0, typeorm_1.Entity)('pos_transactions')
+], PosTransaction);
+//# sourceMappingURL=pos-transaction.entity.js.map

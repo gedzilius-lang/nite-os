@@ -1,22 +1,29 @@
 # NiteOS V8 – Roadmap
 
 ## Phase 0 – Preflight (DONE)
-- Cleaned /opt, installed packages.
-- Configured UFW and Postgres DB.
+- Server prepared, UFW/Postgres ready.
 
 ## Phase 1 – Backend Skeleton (DONE)
-- Created \`/backend\` NestJS app.
-- Configured TypeORM with Postgres (\`nite_os\`).
-- Implemented modules: users, venues, market, pos, nitecoin, feed, auth, analytics.
-- Implemented basic health endpoints.
-- Defined \`User\` entity.
-- **Status:** Running on port 3000 via PM2.
+- NestJS app structure created.
+- Basic Health endpoints live.
 
-## Phase 2 – Real Entities & Data (NEXT)
-Goal: Define the main tables and ensure schema stability.
-- Entities: User, Venue, NitecoinTransaction, MarketItem, PosTransaction.
+## Phase 2 – Core Entities (DONE)
+- Defined TypeORM entities:
+  - **User**: \`id, nitetapId, xp, level, niteBalance, role...\`
+  - **Venue**: \`slug, title, city, status...\`
+  - **MarketItem**: \`priceChf, priceNite, active...\`
+  - **NitecoinTransaction**: \`amount, type, userId...\`
+  - **PosTransaction**: \`totalChf, totalNite, staffId...\`
+- Database tables auto-synced via TypeORM.
 
-## Phase 3 – Market + POS Logic
+---
+
+## Phase 3 – Market + POS Logic (NEXT)
+Goal: Implement the "Pay with Nitecoin" flow.
+- GET /api/market/:venueId/items
+- POST /api/pos/:venueId/checkout
+- Balance validation and transaction recording.
+
 ## Phase 4 – Auth & Roles
-## Phase 5 – Redis + Mongo Integration
+## Phase 5 – Redis + Mongo
 ## Phase 6 – Frontend SPA

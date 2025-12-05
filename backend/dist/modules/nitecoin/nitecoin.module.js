@@ -8,15 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NitecoinModule = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
 const nitecoin_controller_1 = require("./nitecoin.controller");
 const nitecoin_service_1 = require("./nitecoin.service");
+const nitecoin_transaction_entity_1 = require("./nitecoin-transaction.entity");
 let NitecoinModule = class NitecoinModule {
 };
 exports.NitecoinModule = NitecoinModule;
 exports.NitecoinModule = NitecoinModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([nitecoin_transaction_entity_1.NitecoinTransaction])],
         controllers: [nitecoin_controller_1.NitecoinController],
         providers: [nitecoin_service_1.NitecoinService],
+        exports: [typeorm_1.TypeOrmModule],
     })
 ], NitecoinModule);
 //# sourceMappingURL=nitecoin.module.js.map

@@ -18,6 +18,10 @@ const feed_module_1 = require("./modules/feed/feed.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const analytics_module_1 = require("./modules/analytics/analytics.module");
 const user_entity_1 = require("./modules/users/user.entity");
+const venue_entity_1 = require("./modules/venues/venue.entity");
+const market_item_entity_1 = require("./modules/market/market-item.entity");
+const nitecoin_transaction_entity_1 = require("./modules/nitecoin/nitecoin-transaction.entity");
+const pos_transaction_entity_1 = require("./modules/pos/pos-transaction.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -31,7 +35,13 @@ exports.AppModule = AppModule = __decorate([
                 username: 'nite',
                 password: 'nitepassword',
                 database: 'nite_os',
-                entities: [user_entity_1.User],
+                entities: [
+                    user_entity_1.User,
+                    venue_entity_1.Venue,
+                    market_item_entity_1.MarketItem,
+                    nitecoin_transaction_entity_1.NitecoinTransaction,
+                    pos_transaction_entity_1.PosTransaction
+                ],
                 synchronize: true,
             }),
             users_module_1.UsersModule,

@@ -9,56 +9,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.MarketItem = void 0;
 const typeorm_1 = require("typeorm");
-let User = class User {
+let MarketItem = class MarketItem {
 };
-exports.User = User;
+exports.MarketItem = MarketItem;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], MarketItem.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "externalId", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ unique: true, nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "nitetapId", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "apiKey", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ default: 'USER' }),
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], User.prototype, "venueId", void 0);
+], MarketItem.prototype, "venueId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 0 }),
-    __metadata("design:type", Number)
-], User.prototype, "xp", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], MarketItem.prototype, "title", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 1 }),
+    (0, typeorm_1.Column)({ type: 'decimal' }),
     __metadata("design:type", Number)
-], User.prototype, "level", void 0);
+], MarketItem.prototype, "priceChf", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'decimal', default: 0 }),
+    (0, typeorm_1.Column)({ type: 'decimal' }),
     __metadata("design:type", Number)
-], User.prototype, "niteBalance", void 0);
+], MarketItem.prototype, "priceNite", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: true }),
+    __metadata("design:type", Boolean)
+], MarketItem.prototype, "active", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
+], MarketItem.prototype, "createdAt", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "updatedAt", void 0);
-exports.User = User = __decorate([
-    (0, typeorm_1.Entity)('users')
-], User);
-//# sourceMappingURL=user.entity.js.map
+], MarketItem.prototype, "updatedAt", void 0);
+exports.MarketItem = MarketItem = __decorate([
+    (0, typeorm_1.Entity)('market_items')
+], MarketItem);
+//# sourceMappingURL=market-item.entity.js.map

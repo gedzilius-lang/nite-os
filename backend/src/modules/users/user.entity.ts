@@ -6,10 +6,19 @@ export class User {
   id: number;
 
   @Column({ nullable: true })
-  externalId: string;
+  externalId: string; // e.g. Auth0 or generic external ID
 
   @Column({ unique: true, nullable: true })
-  nitetapId: string;
+  nitetapId: string; // Physical card ID
+
+  @Column({ nullable: true })
+  apiKey: string; // For programmatic access
+
+  @Column({ default: 'USER' })
+  role: string; // USER, STAFF, VENUE_ADMIN, NITECORE_ADMIN
+
+  @Column({ nullable: true })
+  venueId: number; // Linked venue (if staff/admin)
 
   @Column({ default: 0 })
   xp: number;
@@ -17,11 +26,8 @@ export class User {
   @Column({ default: 1 })
   level: number;
 
-  @Column({ default: 0 })
+  @Column({ type: 'decimal', default: 0 })
   niteBalance: number;
-
-  @Column({ default: 'USER' })
-  role: string;
 
   @CreateDateColumn()
   createdAt: Date;
