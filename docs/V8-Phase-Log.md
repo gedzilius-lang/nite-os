@@ -30,3 +30,10 @@
 - Implemented \`POST /api/pos/:venueId/checkout\`.
 - Added logic to deduct Nitecoin balance and log transactions.
 - Added dependency injection between POS, Users, Market, and Nitecoin modules.
+
+## 2025-12-05 – Phase 4 – Auth & Roles
+- Installed \`@nestjs/jwt\`, \`passport\`, \`bcryptjs\`.
+- Updated User entity with \`username\` and \`password\`.
+- Implemented \`AuthModule\` with \`/auth/login\`.
+- Added global \`RolesGuard\` and \`JwtAuthGuard\`.
+- Secured POS Checkout: requires valid JWT + STAFF role + Venue Match.

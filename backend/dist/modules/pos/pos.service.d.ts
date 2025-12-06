@@ -10,7 +10,6 @@ export interface CheckoutItemDto {
 export interface CheckoutDto {
     nitetapId: string;
     items: CheckoutItemDto[];
-    staffId: number;
 }
 export declare class PosService {
     private posRepo;
@@ -18,7 +17,7 @@ export declare class PosService {
     private itemRepo;
     private nitecoinRepo;
     constructor(posRepo: Repository<PosTransaction>, userRepo: Repository<User>, itemRepo: Repository<MarketItem>, nitecoinRepo: Repository<NitecoinTransaction>);
-    checkout(venueId: number, dto: CheckoutDto): Promise<{
+    checkout(venueId: number, dto: CheckoutDto, staffUser: any): Promise<{
         success: boolean;
         newBalance: number;
         receiptId: number;

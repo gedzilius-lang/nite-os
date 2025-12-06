@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -15,7 +16,7 @@ export class UsersService {
   }
 
   async createDemoUser() {
-    // Create or reset a demo user
+    // Customer
     let user = await this.userRepo.findOne({ where: { nitetapId: 'TAP-TEST' } });
     if (!user) {
         user = this.userRepo.create({
@@ -25,9 +26,23 @@ export class UsersService {
             level: 5,
             role: 'USER'
         });
-    } else {
-        user.niteBalance = 1000; // Reset balance
+        await this.userRepo.save(user);
     }
-    return this.userRepo.save(user);
+
+    // Admin/Staff User (for POS login)
+    let admin = await this.userRepo.findOne({ where: { username: 'admin' } });
+    if (!admin) {
+        const hash = await bcrypt.hash('admin123', 10);
+        admin = this.userRepo.create({
+            username: 'admin',
+            password: hash,
+            role: 'VENUE_ADMIN',
+            venueId: 1,
+            niteBalance: 0
+        });
+        await this.userRepo.save(admin);
+    }
+    
+    return { user, admin: 'admin / admin123' };
   }
 }

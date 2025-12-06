@@ -2,6 +2,8 @@ export declare class User {
     id: number;
     externalId: string;
     nitetapId: string;
+    username: string;
+    password: string;
     apiKey: string;
     role: string;
     venueId: number;

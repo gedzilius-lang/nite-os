@@ -8,5 +8,8 @@ export declare class UsersService {
         service: string;
         timestamp: string;
     };
-    createDemoUser(): Promise<User>;
+    createDemoUser(): Promise<{
+        user: User;
+        admin: string;
+    }>;
 }

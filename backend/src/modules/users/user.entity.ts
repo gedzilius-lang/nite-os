@@ -6,19 +6,26 @@ export class User {
   id: number;
 
   @Column({ nullable: true })
-  externalId: string; // e.g. Auth0 or generic external ID
+  externalId: string;
 
   @Column({ unique: true, nullable: true })
-  nitetapId: string; // Physical card ID
+  nitetapId: string;
+
+  // New Credential Fields
+  @Column({ unique: true, nullable: true })
+  username: string;
+
+  @Column({ nullable: true, select: false }) // Select false hides it by default
+  password: string;
 
   @Column({ nullable: true })
-  apiKey: string; // For programmatic access
+  apiKey: string;
 
   @Column({ default: 'USER' })
   role: string; // USER, STAFF, VENUE_ADMIN, NITECORE_ADMIN
 
   @Column({ nullable: true })
-  venueId: number; // Linked venue (if staff/admin)
+  venueId: number;
 
   @Column({ default: 0 })
   xp: number;

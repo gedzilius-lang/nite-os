@@ -27,11 +27,13 @@ let PosService = class PosService {
         this.itemRepo = itemRepo;
         this.nitecoinRepo = nitecoinRepo;
     }
-    async checkout(venueId, dto) {
-        const user = await this.userRepo.findOne({ where: { nitetapId: dto.nitetapId } });
-        if (!user) {
-            throw new common_1.NotFoundException('NiteTap ID not found');
+    async checkout(venueId, dto, staffUser) {
+        if (staffUser.role !== 'NITECORE_ADMIN' && staffUser.venueId !== venueId) {
+            throw new common_1.ForbiddenException('You are not authorized for this venue');
         }
+        const customer = await this.userRepo.findOne({ where: { nitetapId: dto.nitetapId } });
+        if (!customer)
+            throw new common_1.NotFoundException('NiteTap ID not found');
         const itemIds = dto.items.map((i) => i.itemId);
         const dbItems = await this.itemRepo.find({ where: { id: (0, typeorm_2.In)(itemIds) } });
         let totalChf = 0;
@@ -43,17 +45,16 @@ let PosService = class PosService {
             totalChf += Number(dbItem.priceChf) * reqItem.count;
             totalNite += Number(dbItem.priceNite) * reqItem.count;
         }
-        if (totalNite === 0 && totalChf === 0) {
-            throw new common_1.BadRequestException('No valid items found');
+        if (totalNite === 0 && totalChf === 0)
+            throw new common_1.BadRequestException('No valid items');
+        if (customer.niteBalance < totalNite) {
+            throw new common_1.BadRequestException(`Insufficient Nitecoin. Required: ${totalNite}, Has: ${customer.niteBalance}`);
         }
-        if (user.niteBalance < totalNite) {
-            throw new common_1.BadRequestException(`Insufficient Nitecoin. Required: ${totalNite}, Has: ${user.niteBalance}`);
-        }
-        user.niteBalance = Number(user.niteBalance) - totalNite;
-        await this.userRepo.save(user);
+        customer.niteBalance = Number(customer.niteBalance) - totalNite;
+        await this.userRepo.save(customer);
         if (totalNite > 0) {
             await this.nitecoinRepo.save({
-                userId: user.id,
+                userId: customer.id,
                 venueId: venueId,
                 amount: -totalNite,
                 type: 'SPEND'
@@ -61,8 +62,8 @@ let PosService = class PosService {
         }
         const receipt = await this.posRepo.save({
             venueId: venueId,
-            staffId: dto.staffId,
-            userId: user.id,
+            staffId: staffUser.userId,
+            userId: customer.id,
             nitetapId: dto.nitetapId,
             totalChf: totalChf,
             totalNite: totalNite,
@@ -70,7 +71,7 @@ let PosService = class PosService {
         });
         return {
             success: true,
-            newBalance: user.niteBalance,
+            newBalance: customer.niteBalance,
             receiptId: receipt.id,
             totalNitePaid: totalNite
         };

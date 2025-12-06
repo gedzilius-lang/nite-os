@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./user.entity");
+const bcrypt = require("bcryptjs");
 let UsersService = class UsersService {
     constructor(userRepo) {
         this.userRepo = userRepo;
@@ -34,11 +35,21 @@ let UsersService = class UsersService {
                 level: 5,
                 role: 'USER'
             });
+            await this.userRepo.save(user);
         }
-        else {
-            user.niteBalance = 1000;
+        let admin = await this.userRepo.findOne({ where: { username: 'admin' } });
+        if (!admin) {
+            const hash = await bcrypt.hash('admin123', 10);
+            admin = this.userRepo.create({
+                username: 'admin',
+                password: hash,
+                role: 'VENUE_ADMIN',
+                venueId: 1,
+                niteBalance: 0
+            });
+            await this.userRepo.save(admin);
         }
-        return this.userRepo.save(user);
+        return { user, admin: 'admin / admin123' };
     }
 };
 exports.UsersService = UsersService;

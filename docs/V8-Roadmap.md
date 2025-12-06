@@ -3,22 +3,19 @@
 ## Phase 0 – Preflight (DONE)
 ## Phase 1 – Backend Skeleton (DONE)
 ## Phase 2 – Core Entities (DONE)
-
 ## Phase 3 – Market + POS Logic (DONE)
-- Implemented \`MarketService\` to fetch venue items.
-- Implemented \`PosService\` checkout logic:
-  - Validates NiteTap ID.
-  - Calculates totals.
-  - Checks & deducts Nitecoin balance.
-  - Records \`PosTransaction\` and \`NitecoinTransaction\`.
-- Added Seeder endpoint for testing.
+
+## Phase 4 – Auth & Roles (DONE)
+- JWT Authentication implemented (Passport + JWT).
+- Roles: USER, STAFF, VENUE_ADMIN, NITECORE_ADMIN.
+- Secured \`/api/pos/*\` endpoints with \`JwtAuthGuard\` and \`RolesGuard\`.
+- Added Password support for Staff users.
 
 ---
 
-## Phase 4 – Auth & Roles (NEXT)
-Goal: Secure the system.
-- JWT-based auth.
-- Roles: USER, STAFF, VENUE_ADMIN, NITECORE_ADMIN.
+## Phase 5 – Redis + Mongo (NEXT)
+Goal: Performance & Observability.
+- Redis: Session store & Rate limiting.
+- Mongo: Analytics Logs.
 
-## Phase 5 – Redis + Mongo
 ## Phase 6 – Frontend SPA
