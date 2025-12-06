@@ -15,6 +15,7 @@ import { PosModule } from './modules/pos/pos.module';
 import { FeedModule } from './modules/feed/feed.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { RadioModule } from './modules/radio/radio.module';
 
 // Entities
 import { User } from './modules/users/user.entity';
@@ -62,6 +63,7 @@ import { PosTransaction } from './modules/pos/pos-transaction.entity';
     FeedModule,
     AuthModule,
     AnalyticsModule,
+    RadioModule,
   ],
   providers: [
     {

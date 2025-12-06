@@ -22,6 +22,7 @@ const pos_module_1 = require("./modules/pos/pos.module");
 const feed_module_1 = require("./modules/feed/feed.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const analytics_module_1 = require("./modules/analytics/analytics.module");
+const radio_module_1 = require("./modules/radio/radio.module");
 const user_entity_1 = require("./modules/users/user.entity");
 const venue_entity_1 = require("./modules/venues/venue.entity");
 const market_item_entity_1 = require("./modules/market/market-item.entity");
@@ -62,6 +63,7 @@ exports.AppModule = AppModule = __decorate([
             feed_module_1.FeedModule,
             auth_module_1.AuthModule,
             analytics_module_1.AnalyticsModule,
+            radio_module_1.RadioModule,
         ],
         providers: [
             {
