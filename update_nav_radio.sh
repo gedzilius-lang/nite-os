@@ -1,3 +1,12 @@
+#!/bin/bash
+
+FRONT_DIR="/opt/nite-os/frontend"
+cd $FRONT_DIR
+
+echo "--- 🧭 UPDATING NAVIGATION BAR ---"
+
+# 1. Overwrite App.vue with the Radio Link included
+cat <<EOF > src/App.vue
 <script setup lang="ts">
 import { useAuthStore } from './stores/auth'
 const auth = useAuthStore()
@@ -45,3 +54,10 @@ a.router-link-active { color: #42b883; }
 
 .auth-links { display: flex; gap: 15px; }
 </style>
+EOF
+
+# 2. Rebuild Frontend
+echo "Building Frontend..."
+npm run build
+
+echo "✅ Navigation Updated. 'Radio' tab added."
