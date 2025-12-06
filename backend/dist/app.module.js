@@ -41,7 +41,7 @@ exports.AppModule = AppModule = __decorate([
                 password: 'nitepassword',
                 database: 'nite_os',
                 entities: [user_entity_1.User, venue_entity_1.Venue, market_item_entity_1.MarketItem, nitecoin_transaction_entity_1.NitecoinTransaction, pos_transaction_entity_1.PosTransaction],
-                synchronize: true,
+                synchronize: false,
             }),
             mongoose_1.MongooseModule.forRoot('mongodb://127.0.0.1:27017/nite_analytics'),
             cache_manager_1.CacheModule.register({

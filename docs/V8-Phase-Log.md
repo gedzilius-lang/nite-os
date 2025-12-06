@@ -50,3 +50,9 @@
 - Frontend: Implemented Pinia Auth Store.
 - Frontend: Built Login, Profile, and Market views.
 - Wired frontend to backend API using JWT tokens.
+
+## 2025-12-05 – Phase 8 – Hardening & Completion
+- Installed \`helmet\` for HTTP security headers.
+- Disabled TypeORM auto-synchronization.
+- Created \`deploy.sh\` for one-command updates.
+- **PROJECT STATUS: LIVE**

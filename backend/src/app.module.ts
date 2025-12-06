@@ -25,7 +25,6 @@ import { PosTransaction } from './modules/pos/pos-transaction.entity';
 
 @Module({
   imports: [
-    // 1. PostgreSQL (Relational Data)
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: '127.0.0.1',
@@ -34,13 +33,15 @@ import { PosTransaction } from './modules/pos/pos-transaction.entity';
       password: 'nitepassword',
       database: 'nite_os',
       entities: [User, Venue, MarketItem, NitecoinTransaction, PosTransaction],
-      synchronize: true,
+      
+      // PRODUCTION SAFETY:
+      // We disable auto-sync to prevent schema data loss.
+      // Future changes should use Migrations.
+      synchronize: false, 
     }),
 
-    // 2. MongoDB (Analytics Logs)
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/nite_analytics'),
 
-    // 3. Redis (Cache & Rate Limits)
     CacheModule.register({
       isGlobal: true, 
       store: redisStore,
@@ -48,13 +49,11 @@ import { PosTransaction } from './modules/pos/pos-transaction.entity';
       port: 6379,
     }),
 
-    // 4. Throttler (Rate Limiting)
     ThrottlerModule.forRoot([{
-      ttl: 60000, // 1 minute
-      limit: 100, // 100 requests per minute per IP
+      ttl: 60000,
+      limit: 100,
     }]),
 
-    // Feature Modules
     UsersModule,
     VenuesModule,
     NitecoinModule,
@@ -67,7 +66,7 @@ import { PosTransaction } from './modules/pos/pos-transaction.entity';
   providers: [
     {
       provide: APP_GUARD,
-      useClass: ThrottlerGuard, // Apply rate limiting globally
+      useClass: ThrottlerGuard,
     },
   ],
 })
