@@ -20,12 +20,14 @@ const pos_transaction_entity_1 = require("./pos-transaction.entity");
 const user_entity_1 = require("../users/user.entity");
 const market_item_entity_1 = require("../market/market-item.entity");
 const nitecoin_transaction_entity_1 = require("../nitecoin/nitecoin-transaction.entity");
+const analytics_service_1 = require("../analytics/analytics.service");
 let PosService = class PosService {
-    constructor(posRepo, userRepo, itemRepo, nitecoinRepo) {
+    constructor(posRepo, userRepo, itemRepo, nitecoinRepo, analytics) {
         this.posRepo = posRepo;
         this.userRepo = userRepo;
         this.itemRepo = itemRepo;
         this.nitecoinRepo = nitecoinRepo;
+        this.analytics = analytics;
     }
     async checkout(venueId, dto, staffUser) {
         if (staffUser.role !== 'NITECORE_ADMIN' && staffUser.venueId !== venueId) {
@@ -47,9 +49,8 @@ let PosService = class PosService {
         }
         if (totalNite === 0 && totalChf === 0)
             throw new common_1.BadRequestException('No valid items');
-        if (customer.niteBalance < totalNite) {
-            throw new common_1.BadRequestException(`Insufficient Nitecoin. Required: ${totalNite}, Has: ${customer.niteBalance}`);
-        }
+        if (customer.niteBalance < totalNite)
+            throw new common_1.BadRequestException(`Insufficient Nitecoin`);
         customer.niteBalance = Number(customer.niteBalance) - totalNite;
         await this.userRepo.save(customer);
         if (totalNite > 0) {
@@ -69,11 +70,15 @@ let PosService = class PosService {
             totalNite: totalNite,
             status: 'COMPLETED'
         });
+        this.analytics.logEvent('POS', 'CHECKOUT', customer.id, {
+            venueId,
+            totalNite,
+            receiptId: receipt.id
+        });
         return {
             success: true,
             newBalance: customer.niteBalance,
-            receiptId: receipt.id,
-            totalNitePaid: totalNite
+            receiptId: receipt.id
         };
     }
 };
@@ -87,6 +92,7 @@ exports.PosService = PosService = __decorate([
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
-        typeorm_2.Repository])
+        typeorm_2.Repository,
+        analytics_service_1.AnalyticsService])
 ], PosService);
 //# sourceMappingURL=pos.service.js.map

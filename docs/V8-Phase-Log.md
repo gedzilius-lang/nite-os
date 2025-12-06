@@ -37,3 +37,10 @@
 - Implemented \`AuthModule\` with \`/auth/login\`.
 - Added global \`RolesGuard\` and \`JwtAuthGuard\`.
 - Secured POS Checkout: requires valid JWT + STAFF role + Venue Match.
+
+## 2025-12-05 – Phase 5 – Redis + Mongo
+- Installed Redis/Mongo dependencies.
+- Configured \`MongooseModule\` and \`CacheModule\`.
+- Implemented \`AnalyticsService\` to write to Mongo.
+- Wired POS service to log sales to Analytics.
+- Enabled Global Rate Limiting.

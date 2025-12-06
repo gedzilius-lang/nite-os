@@ -5,6 +5,7 @@ import { PosTransaction } from './pos-transaction.entity';
 import { User } from '../users/user.entity';
 import { MarketItem } from '../market/market-item.entity';
 import { NitecoinTransaction } from '../nitecoin/nitecoin-transaction.entity';
+import { AnalyticsService } from '../analytics/analytics.service';
 
 export interface CheckoutItemDto {
   itemId: number;
@@ -14,7 +15,6 @@ export interface CheckoutItemDto {
 export interface CheckoutDto {
   nitetapId: string;
   items: CheckoutItemDto[];
-  // staffId is now injected from the Controller via JWT
 }
 
 @Injectable()
@@ -24,10 +24,11 @@ export class PosService {
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(MarketItem) private itemRepo: Repository<MarketItem>,
     @InjectRepository(NitecoinTransaction) private nitecoinRepo: Repository<NitecoinTransaction>,
+    private analytics: AnalyticsService,
   ) {}
 
   async checkout(venueId: number, dto: CheckoutDto, staffUser: any) {
-    // Security: Ensure staff belongs to this venue (unless Admin)
+    // Security Check
     if (staffUser.role !== 'NITECORE_ADMIN' && staffUser.venueId !== venueId) {
        throw new ForbiddenException('You are not authorized for this venue');
     }
@@ -40,7 +41,7 @@ export class PosService {
     const itemIds = dto.items.map((i) => i.itemId);
     const dbItems = await this.itemRepo.find({ where: { id: In(itemIds) } });
     
-    // 3. Calculate Totals
+    // 3. Calc Totals
     let totalChf = 0;
     let totalNite = 0;
 
@@ -52,13 +53,9 @@ export class PosService {
     }
 
     if (totalNite === 0 && totalChf === 0) throw new BadRequestException('No valid items');
+    if (customer.niteBalance < totalNite) throw new BadRequestException(`Insufficient Nitecoin`);
 
-    // 4. Check Balance
-    if (customer.niteBalance < totalNite) {
-      throw new BadRequestException(`Insufficient Nitecoin. Required: ${totalNite}, Has: ${customer.niteBalance}`);
-    }
-
-    // 5. Execute Transaction
+    // 4. Execute
     customer.niteBalance = Number(customer.niteBalance) - totalNite;
     await this.userRepo.save(customer);
 
@@ -71,10 +68,9 @@ export class PosService {
       });
     }
 
-    // 6. Create Receipt
     const receipt = await this.posRepo.save({
       venueId: venueId,
-      staffId: staffUser.userId, // From JWT
+      staffId: staffUser.userId,
       userId: customer.id,
       nitetapId: dto.nitetapId,
       totalChf: totalChf,
@@ -82,11 +78,17 @@ export class PosService {
       status: 'COMPLETED'
     });
 
+    // 5. ASYNC ANALYTICS LOG (Fire & Forget)
+    this.analytics.logEvent('POS', 'CHECKOUT', customer.id, {
+        venueId,
+        totalNite,
+        receiptId: receipt.id
+    });
+
     return {
       success: true,
       newBalance: customer.niteBalance,
-      receiptId: receipt.id,
-      totalNitePaid: totalNite
+      receiptId: receipt.id
     };
   }
 }

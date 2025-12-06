@@ -9,6 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const mongoose_1 = require("@nestjs/mongoose");
+const cache_manager_1 = require("@nestjs/cache-manager");
+const throttler_1 = require("@nestjs/throttler");
+const core_1 = require("@nestjs/core");
+const redisStore = require("cache-manager-ioredis");
 const users_module_1 = require("./modules/users/users.module");
 const venues_module_1 = require("./modules/venues/venues.module");
 const nitecoin_module_1 = require("./modules/nitecoin/nitecoin.module");
@@ -35,15 +40,20 @@ exports.AppModule = AppModule = __decorate([
                 username: 'nite',
                 password: 'nitepassword',
                 database: 'nite_os',
-                entities: [
-                    user_entity_1.User,
-                    venue_entity_1.Venue,
-                    market_item_entity_1.MarketItem,
-                    nitecoin_transaction_entity_1.NitecoinTransaction,
-                    pos_transaction_entity_1.PosTransaction
-                ],
+                entities: [user_entity_1.User, venue_entity_1.Venue, market_item_entity_1.MarketItem, nitecoin_transaction_entity_1.NitecoinTransaction, pos_transaction_entity_1.PosTransaction],
                 synchronize: true,
             }),
+            mongoose_1.MongooseModule.forRoot('mongodb://127.0.0.1:27017/nite_analytics'),
+            cache_manager_1.CacheModule.register({
+                isGlobal: true,
+                store: redisStore,
+                host: '127.0.0.1',
+                port: 6379,
+            }),
+            throttler_1.ThrottlerModule.forRoot([{
+                    ttl: 60000,
+                    limit: 100,
+                }]),
             users_module_1.UsersModule,
             venues_module_1.VenuesModule,
             nitecoin_module_1.NitecoinModule,
@@ -52,6 +62,12 @@ exports.AppModule = AppModule = __decorate([
             feed_module_1.FeedModule,
             auth_module_1.AuthModule,
             analytics_module_1.AnalyticsModule,
+        ],
+        providers: [
+            {
+                provide: core_1.APP_GUARD,
+                useClass: throttler_1.ThrottlerGuard,
+            },
         ],
     })
 ], AppModule);

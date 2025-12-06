@@ -3,6 +3,7 @@ import { PosTransaction } from './pos-transaction.entity';
 import { User } from '../users/user.entity';
 import { MarketItem } from '../market/market-item.entity';
 import { NitecoinTransaction } from '../nitecoin/nitecoin-transaction.entity';
+import { AnalyticsService } from '../analytics/analytics.service';
 export interface CheckoutItemDto {
     itemId: number;
     count: number;
@@ -16,11 +17,11 @@ export declare class PosService {
     private userRepo;
     private itemRepo;
     private nitecoinRepo;
-    constructor(posRepo: Repository<PosTransaction>, userRepo: Repository<User>, itemRepo: Repository<MarketItem>, nitecoinRepo: Repository<NitecoinTransaction>);
+    private analytics;
+    constructor(posRepo: Repository<PosTransaction>, userRepo: Repository<User>, itemRepo: Repository<MarketItem>, nitecoinRepo: Repository<NitecoinTransaction>, analytics: AnalyticsService);
     checkout(venueId: number, dto: CheckoutDto, staffUser: any): Promise<{
         success: boolean;
         newBalance: number;
         receiptId: number;
-        totalNitePaid: number;
     }>;
 }

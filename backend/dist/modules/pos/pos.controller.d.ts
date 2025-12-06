@@ -6,7 +6,6 @@ export declare class PosController {
         success: boolean;
         newBalance: number;
         receiptId: number;
-        totalNitePaid: number;
     }>;
     health(): {
         status: string;
