@@ -56,3 +56,7 @@
 - Disabled TypeORM auto-synchronization.
 - Created \`deploy.sh\` for one-command updates.
 - **PROJECT STATUS: LIVE**
+
+## 2025-12-06 – Phase 9 – SSL Security
+- Secured domain with Let's Encrypt SSL.
+- Enabled auto-renewal via Certbot.

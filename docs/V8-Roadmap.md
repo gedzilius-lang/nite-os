@@ -21,3 +21,8 @@ Future updates should follow the workflow:
 1. Make changes locally.
 2. Push to GitHub.
 3. SSH into VPS and run \`./deploy.sh\`.
+
+## Phase 9 – HTTPS & SSL (DONE)
+- Installed Certbot.
+- Enabled HTTPS for \`os.peoplewelike.club\`.
+- Configured HTTP -> HTTPS redirection.
