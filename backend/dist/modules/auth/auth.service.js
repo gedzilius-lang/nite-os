@@ -58,6 +58,9 @@ let AuthService = class AuthService {
             user: payload
         };
     }
+    async getProfile(userId) {
+        return this.usersRepository.findOne({ where: { id: userId } });
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

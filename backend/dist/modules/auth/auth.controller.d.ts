@@ -11,4 +11,5 @@ export declare class AuthController {
             venueId: any;
         };
     }>;
+    getProfile(req: any): Promise<import("../users/user.entity").User>;
 }

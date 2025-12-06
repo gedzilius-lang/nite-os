@@ -44,3 +44,9 @@
 - Implemented \`AnalyticsService\` to write to Mongo.
 - Wired POS service to log sales to Analytics.
 - Enabled Global Rate Limiting.
+
+## 2025-12-05 – Phase 7 – UI Implementation
+- Backend: Exposed user profile endpoint.
+- Frontend: Implemented Pinia Auth Store.
+- Frontend: Built Login, Profile, and Market views.
+- Wired frontend to backend API using JWT tokens.

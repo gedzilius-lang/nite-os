@@ -1,30 +1,37 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { useAuthStore } from './stores/auth'
+const auth = useAuthStore()
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="app-container">
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/market">Market</router-link>
+      <div v-if="auth.isAuthenticated" class="auth-links">
+        <router-link to="/profile">Profile</router-link>
+      </div>
+      <router-link v-else to="/login">Login</router-link>
+    </nav>
+    <main>
+      <router-view />
+    </main>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style>
+body { margin: 0; background: #111; color: #eee; font-family: Inter, sans-serif; }
+.app-container { max-width: 800px; margin: 0 auto; text-align: center; }
+nav {
+  padding: 20px;
+  background: #222;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+a { color: #888; text-decoration: none; font-weight: bold; }
+a.router-link-active { color: #42b883; }
+.auth-links { display: flex; gap: 15px; }
 </style>

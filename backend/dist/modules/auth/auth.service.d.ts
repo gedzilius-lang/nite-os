@@ -15,4 +15,5 @@ export declare class AuthService {
             venueId: any;
         };
     }>;
+    getProfile(userId: number): Promise<User>;
 }

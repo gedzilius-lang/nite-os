@@ -5,16 +5,19 @@
 ## Phase 2 – Core Entities (DONE)
 ## Phase 3 – Market + POS Logic (DONE)
 ## Phase 4 – Auth & Roles (DONE)
-
 ## Phase 5 – Redis + Mongo (DONE)
-- **MongoDB**: Configured for Analytics.
-- **Redis**: Configured for Caching.
-- **Rate Limiting**: Applied globally (100 req/min).
-- **Analytics**: Auto-logging POS transactions to Mongo.
+## Phase 6 – Frontend Skeleton (DONE)
+
+## Phase 7 – UI Implementation (DONE)
+- Implemented \`auth.store.ts\` (Pinia).
+- Added \`/api/auth/profile\` to backend.
+- Views: Login, Profile, Market.
+- Connected Frontend to API (Axios + JWT).
 
 ---
 
-## Phase 6 – Frontend SPA (NEXT)
-Goal: Visible UI.
-- Vue 3 + Vite.
-- Feed, Market, Profile, Radio.
+## Phase 8 – Hardening & CI (NEXT)
+Goal: Production Ready.
+- Disable \`synchronize: true\`.
+- Security headers.
+- Deploy scripts.

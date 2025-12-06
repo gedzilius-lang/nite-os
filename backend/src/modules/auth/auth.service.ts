@@ -38,4 +38,8 @@ export class AuthService {
       user: payload
     };
   }
+
+  async getProfile(userId: number) {
+    return this.usersRepository.findOne({ where: { id: userId } });
+  }
 }
